@@ -1,2 +1,2 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'rack/time_enforcement'
+require 'rack-time_enforcement'

@@ -1,5 +1,5 @@
 module Rack
-  module TimeEnforcement
+  class TimeEnforcement
     VERSION = "0.1.0"
   end
 end
