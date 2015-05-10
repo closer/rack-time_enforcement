@@ -21,18 +21,18 @@ describe Rack::TimeEnforcement do
   context "called" do
     subject { request }
 
-    it { expect(subject[1]).to include "TimeEnforcement-Available" => "true" }
-    it { expect(subject[1]).to_not include "TimeEnforcement-Enabled" => "true" }
+    it { expect(subject[1]).to include "Time-Enforcement-Available" => "true" }
+    it { expect(subject[1]).to_not include "Time-Enforcement-Enabled" => "true" }
     it { expect(subject[2]).to include Time.now.to_s }
   end
 
   context "called" do
     let(:time) { Time.new(1994, 1, 1) }
-    let(:opts) { { "TimeEnforcement-At" => time.to_s } }
+    let(:opts) { { "Time-Enforcement-At" => time.to_s } }
     subject { request }
 
-    it { expect(subject[1]).to include "TimeEnforcement-Available" => "true" }
-    it { expect(subject[1]).to include "TimeEnforcement-Enabled" => "true" }
+    it { expect(subject[1]).to include "Time-Enforcement-Available" => "true" }
+    it { expect(subject[1]).to include "Time-Enforcement-Enabled" => "true" }
     it { expect(subject[2]).to include time.to_s }
   end
 end

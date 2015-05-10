@@ -1,4 +1,5 @@
 require "timecop"
+require "time"
 
 module Rack
   class TimeEnforcement
@@ -13,7 +14,11 @@ module Rack
         headers['Time-Enforcement-Enabled'] = 'true'
       else
         code, headers, body = @app.call(env)
+        if headers['Time-Enforcement-At']
+          headers['Time-Enforcement-Enabled'] = 'false'
+        end
       end
+
 
       headers['Time-Enforcement-Available'] = 'true'
 
