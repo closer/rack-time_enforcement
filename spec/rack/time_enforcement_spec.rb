@@ -27,7 +27,7 @@ describe Rack::TimeEnforcement do
   end
 
   context "called" do
-    let(:time) { Time.new(1983, 5, 5) }
+    let(:time) { Time.new(1994, 1, 1) }
     let(:opts) { { "TimeEnforcement-At" => time.to_s } }
     subject { request }
 
