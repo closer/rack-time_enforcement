@@ -9,21 +9,21 @@ module Rack
     def call(env)
       if time = time_extract(env)
         code, headers, body = Timecop.travel(time) { @app.call(env) }
-        headers['TimeEnforcement-In'] = time.to_s
-        headers['TimeEnforcement-Enabled'] = 'true'
+        headers['Time-Enforcement-In'] = time.to_s
+        headers['Time-Enforcement-Enabled'] = 'true'
       else
         code, headers, body = @app.call(env)
       end
 
-      headers['TimeEnforcement-Available'] = 'true'
+      headers['Time-Enforcement-Available'] = 'true'
 
       [code, headers, body]
     end
 
     def time_extract(env)
-      if env['TimeEnforcement-At']
+      if env['Time-Enforcement-At']
         begin
-          Time.parse env["TimeEnforcement-At"]
+          Time.parse env["Time-Enforcement-At"]
         rescue
           nil
         end
