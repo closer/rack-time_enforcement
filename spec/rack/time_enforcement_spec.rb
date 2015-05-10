@@ -18,7 +18,7 @@ describe Rack::TimeEnforcement do
     app.call Rack::MockRequest.env_for uri, opts
   end
 
-  context "called" do
+  context "default" do
     subject { request }
 
     it { expect(subject[1]).to include "Time-Enforcement-Available" => "true" }
@@ -26,7 +26,7 @@ describe Rack::TimeEnforcement do
     it { expect(subject[2]).to include Time.now.to_s }
   end
 
-  context "called" do
+  context "enforcement" do
     let(:time) { Time.new(1994, 1, 1) }
     let(:opts) { { "Time-Enforcement-At" => time.to_s } }
     subject { request }
@@ -34,5 +34,14 @@ describe Rack::TimeEnforcement do
     it { expect(subject[1]).to include "Time-Enforcement-Available" => "true" }
     it { expect(subject[1]).to include "Time-Enforcement-Enabled" => "true" }
     it { expect(subject[2]).to include time.to_s }
+  end
+
+  context "enforcement failure" do
+    let(:opts) { { "Time-Enforcement-At" => "XXXXXXXXXX" } }
+    subject { request }
+
+    it { expect(subject[1]).to include "Time-Enforcement-Available" => "true" }
+    it { expect(subject[1]).to include "Time-Enforcement-Enabled" => "false" }
+    it { expect(subject[2]).to include Time.now.to_s }
   end
 end

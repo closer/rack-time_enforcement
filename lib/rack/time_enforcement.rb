@@ -14,7 +14,7 @@ module Rack
         headers['Time-Enforcement-Enabled'] = 'true'
       else
         code, headers, body = @app.call(env)
-        if headers['Time-Enforcement-At']
+        if env['Time-Enforcement-At']
           headers['Time-Enforcement-Enabled'] = 'false'
         end
       end
