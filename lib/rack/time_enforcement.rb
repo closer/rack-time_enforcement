@@ -14,7 +14,7 @@ module Rack
         headers['Time-Enforcement-Enabled'] = 'true'
       else
         code, headers, body = @app.call(env)
-        if env['Time-Enforcement-At']
+        if env['HTTP_TIME_ENFORCEMENT_AT']
           headers['Time-Enforcement-Enabled'] = 'false'
         end
       end
@@ -26,9 +26,9 @@ module Rack
     end
 
     def time_extract(env)
-      if env['Time-Enforcement-At']
+      if env['HTTP_TIME_ENFORCEMENT_AT']
         begin
-          Time.parse env["Time-Enforcement-At"]
+          Time.parse env["HTTP_TIME_ENFORCEMENT_AT"]
         rescue
           nil
         end

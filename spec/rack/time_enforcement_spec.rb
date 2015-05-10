@@ -28,7 +28,7 @@ describe Rack::TimeEnforcement do
 
   context "enforcement" do
     let(:time) { Time.new(1994, 1, 1) }
-    let(:opts) { { "Time-Enforcement-At" => time.to_s } }
+    let(:opts) { { "HTTP_TIME_ENFORCEMENT_AT" => time.to_s } }
     subject { request }
 
     it { expect(subject[1]).to include "Time-Enforcement-Available" => "true" }
@@ -37,7 +37,7 @@ describe Rack::TimeEnforcement do
   end
 
   context "enforcement failure" do
-    let(:opts) { { "Time-Enforcement-At" => "XXXXXXXXXX" } }
+    let(:opts) { { "HTTP_TIME_ENFORCEMENT_AT" => "XXXXXXXXXX" } }
     subject { request }
 
     it { expect(subject[1]).to include "Time-Enforcement-Available" => "true" }
